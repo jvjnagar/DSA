@@ -140,6 +140,103 @@ void Postorder(struct Node *p)
         printf("%d, ", p->value);
     }
 }
+void iterativePreorder(struct Node *p)
+{
+    stack <Node *> stk;
+    while(p!=NULL || stk.empty())
+    {
+        if(p!=NULL)
+        {
+            printf("%d",p->value);
+            stk.emplace(p);
+            p = p->lchild;
+        } else {
+            p=stk.top();
+            stk.pop();
+            p=p->rchild;
+            
+        }
+    }
+}
+
+void iterativeInorder(struct Node *p)
+{
+    stack <Node *> stk;
+    while(p!=NULL || stk.empty())
+    {
+        if(p!=NULL)
+        {
+            stk.emplace(p);
+            p = p->lchild;
+        } else {
+            p=stk.top();
+            stk.pop();
+            cout<<p->value<< ", " << flush;
+            p=p->rchild;
+        }
+    }
+}
+
+void iterativePostorder(struct Node *p)
+{
+    stack <long int> stk;
+    long int tmp;
+    while(p!=NULL || stk.empty())
+    {
+        if(p!=NULL)
+        {
+            stk.emplace((long int)p);
+            p = p->lchild;
+        }
+        else
+        {
+            tmp=stk.top();
+            stk.pop();
+            if(tmp>0)
+            {
+                stk.emplace(-tmp);
+                p=((Node *) tmp)->rchild;
+            }
+            else
+            {
+                printf("%d",((Node *)(-1* tmp))->value);
+                p=nullptr;
+            }
+            
+        }
+    }
+}
+
+void Leveorder(struct Node * p)
+{
+    struct queue q;
+    q.enqueue(p);
+    while(!q.isEmpty()){
+        p = q.dequeue();
+        printf("%d ", p->value);
+        if(p->lchild!=NULL){
+            q.enqueue(p->lchild);
+        } 
+        if (p->rchild!= NULL){
+            q.enqueue(p->rchild);
+        }
+    }
+}
+
+int Height(struct Node *p)
+{
+    int l=0, r=0;
+    if(p==nullptr)
+    {
+        return 0;
+    }
+    l=Height(p->lchild);
+    r=Height(p->rchild);
+    if(l>r)
+        return l+1;
+    else
+        return r+1;
+}
 
 int main()
 {
