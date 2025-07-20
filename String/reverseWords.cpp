@@ -13,24 +13,23 @@ public:
         {
             if (it == ' ')
             {
-                if(s_tmp!="")
+                if(!s_tmp.empty())
+                {
                     stk.push(s_tmp);
-                s_tmp = "";
-                continue;
+                    s_tmp.clear();
+                }
             }
             else
                 s_tmp.push_back(it);
         }
-        if(s_tmp!="")
+        if(!s_tmp.empty()) 
             stk.push(s_tmp);
-        for (auto c: stk.top())
-            s_out.push_back(c);
+        s_out += stk.top();
         stk.pop();
         while(!stk.empty())
         {
             s_out.push_back(' ');
-            for (auto c: stk.top())
-                s_out.push_back(c);
+            s_out += stk.top();
             stk.pop();
         }
         return s_out;
